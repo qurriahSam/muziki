@@ -1,6 +1,9 @@
-import "./App.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { yellow } from "@mui/material/colors";
+import Navbar from "./components/Navbar";
+import LandingPage from "./components/LandingPage";
+import SignUp from "./components/SignUp";
+import { Routes, Route } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -16,7 +19,11 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <h1>hello</h1>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="about" element={<SignUp />} />
+      </Routes>
     </ThemeProvider>
   );
 }
