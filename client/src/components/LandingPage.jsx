@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import headphones from "../img/headphonesClipartpng";
 import { Box, Button } from "@mui/material";
 
 const landing = {
   height: "89vh",
-  backgroundImage: "linear-gradient(to right, #E5D96A 50% , white 50%)",
+  backgroundImage: "linear-gradient(158deg, #fff176 50% , white 50%)",
   marginTop: "0px",
   display: "flex",
   alignItems: "center",
@@ -18,7 +18,16 @@ const title = {
   paddingBottom: "5vh",
 };
 
-function LandingPage() {
+function LandingPage({ setUser }) {
+  useEffect(() => {
+    fetch("/me").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setUser(user));
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div style={landing}>
       <Box sx={{ textAlign: "center" }}>
