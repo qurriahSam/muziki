@@ -13,9 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
 const pages = ["Add Song", "New Playlist"];
-const settings = ["Login", "Logout"];
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = ({ user }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -144,11 +143,12 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem key="Login" onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Login</Typography>
+              </MenuItem>
+              <MenuItem key="SignUp" onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">SignUp</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "block" } }}>
