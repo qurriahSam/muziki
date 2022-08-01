@@ -3,7 +3,7 @@ import headphones from "../img/headphonesClipartpng";
 import { Box, Button } from "@mui/material";
 
 const landing = {
-  height: "100vh",
+  height: "89vh",
   backgroundImage: "linear-gradient(to right, #E5D96A 50% , white 50%)",
   marginTop: "0px",
   display: "flex",
