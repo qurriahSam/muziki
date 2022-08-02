@@ -21,7 +21,7 @@ const title = {
   paddingBottom: "5vh",
 };
 
-function SignUp({ setUser }) {
+function SignUp({ handleSetUser }) {
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -68,7 +68,7 @@ function SignUp({ setUser }) {
             }),
           });
           const user = await response.json();
-          setUser(user);
+          handleSetUser(user);
           console.log("created in db", user);
           setValues({
             name: "",
@@ -77,7 +77,7 @@ function SignUp({ setUser }) {
             password: "",
             showPassword: false,
           });
-          navigate("/");
+          navigate("/dashboard");
         } catch (error) {
           console.log("signup error", error);
         }

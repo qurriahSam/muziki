@@ -20,7 +20,7 @@ const title = {
   paddingBottom: "5vh",
 };
 
-function Login({ setUser }) {
+function Login({ handleSetUser }) {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -46,7 +46,6 @@ function Login({ setUser }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
     const { email, password } = values;
     const sendCredentials = async () => {
       try {
@@ -63,14 +62,18 @@ function Login({ setUser }) {
           }),
         });
         const user = await response.json();
-        setUser(user);
-        console.log("created in db", user);
-        setValues({
-          email: "",
-          password: "",
-          showPassword: false,
-        });
-        navigate("/");
+        if (user.id) {
+          handleSetUser(user);
+          console.log("created in db", user);
+          setValues({
+            email: "",
+            password: "",
+            showPassword: false,
+          });
+          navigate("/dashboard");
+        } else {
+          alert(user["error"]);
+        }
       } catch (error) {
         console.log("signup error", error);
       }

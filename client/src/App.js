@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { yellow } from "@mui/material/colors";
 import Navbar from "./components/Navbar";
+import { useNavigate } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
@@ -20,14 +21,37 @@ const theme = createTheme({
 });
 
 function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSetUser = (r) => {
+    setUser(r);
+    //console.log(user);
+  };
+
+  useEffect(() => {
+    fetch("/me").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          setUser(() => user);
+          console.log("logged", user);
+          if (!user) {
+            navigate("/");
+          }
+        });
+      }
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
-      <Navbar user={user} />
+      <Navbar user={user} handleSetUser={handleSetUser} />
       <Routes>
-        <Route path="/" element={<LandingPage user={user} setUser={setUser} />} />
-        <Route path="signup" element={<SignUp setUser={setUser} />} />
-        <Route path="login" element={<Login setUser={setUser} />} />
+        <Route path="/" element={<LandingPage user={user} handleSetUser={handleSetUser} />} />
+        <Route path="signup" element={<SignUp handleSetUser={handleSetUser} />} />
+        <Route path="login" element={<Login handleSetUser={handleSetUser} />} />
         <Route path="dashboard" element={<Dashboard user={user} />} />
         <Route path="*" element={<p>There's nothing here: 404!</p>} />
       </Routes>

@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import AddSong from "./AddSong";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,7 +17,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 const pages = ["Add Song", "New Playlist"];
 
-const ResponsiveAppBar = ({ user }) => {
+const ResponsiveAppBar = ({ user, handleSetUser }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -29,9 +32,40 @@ const ResponsiveAppBar = ({ user }) => {
     setAnchorElNav(null);
   };
 
+  const handlePlaylistToggle = () => {
+    handleCloseNavMenu();
+    handleClickOpen();
+  };
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogoutUserMenu = () => {
+    handleLogoutClick();
+    setAnchorElUser(null);
+  };
+
+  const navigate = useNavigate();
+
+  function handleLogoutClick() {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        handleSetUser(null);
+        navigate("/");
+      }
+    });
+    console.log("loggedOut");
+  }
 
   return (
     <AppBar position="static">
@@ -84,11 +118,12 @@ const ResponsiveAppBar = ({ user }) => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem key="Add Song" onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">Add Song</Typography>
+              </MenuItem>
+              <MenuItem key="Create Playlist" onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">Create Playlist</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -143,19 +178,33 @@ const ResponsiveAppBar = ({ user }) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem key="Login" onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">Login</Typography>
-              </MenuItem>
-              <MenuItem key="SignUp" onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">SignUp</Typography>
+              <Link to="login">
+                <MenuItem key="Login" onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Login</Typography>
+                </MenuItem>
+              </Link>
+              <Link to="signup">
+                <MenuItem key="SignUp" onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">SignUp</Typography>
+                </MenuItem>
+              </Link>
+              <MenuItem key="Logout" onClick={handleLogoutUserMenu}>
+                <Typography textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "block" } }}>
-            <Button variant="text" color="inherit">
-              Login
+            <Button variant="text" color="inherit" onClick={handleLogoutClick}>
+              Logout
             </Button>
-            <Button variant="contained">Signup</Button>
+            <Link to="login">
+              <Button variant="text" color="inherit">
+                Login
+              </Button>
+            </Link>
+            <Link to="signup">
+              <Button variant="contained">Signup</Button>
+            </Link>
           </Box>
         </Toolbar>
       </Container>
