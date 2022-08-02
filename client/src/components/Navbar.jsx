@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import AddSong from "./AddSong";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -32,11 +31,6 @@ const ResponsiveAppBar = ({ user, handleSetUser }) => {
     setAnchorElNav(null);
   };
 
-  const handlePlaylistToggle = () => {
-    handleCloseNavMenu();
-    handleClickOpen();
-  };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -49,15 +43,6 @@ const ResponsiveAppBar = ({ user, handleSetUser }) => {
   const navigate = useNavigate();
 
   function handleLogoutClick() {
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-
-    const handleClose = () => {
-      setOpen(false);
-    };
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         handleSetUser(null);
@@ -118,12 +103,11 @@ const ResponsiveAppBar = ({ user, handleSetUser }) => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem key="Add Song" onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Add Song</Typography>
-              </MenuItem>
-              <MenuItem key="Create Playlist" onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Create Playlist</Typography>
-              </MenuItem>
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
             </Menu>
           </Box>
           <Typography
