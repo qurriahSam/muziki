@@ -68,16 +68,29 @@ function SignUp({ handleSetUser }) {
             }),
           });
           const user = await response.json();
-          handleSetUser(user);
-          console.log("created in db", user);
-          setValues({
-            name: "",
-            email: "",
-            confirmPassword: "",
-            password: "",
-            showPassword: false,
-          });
-          navigate("/dashboard");
+          if (user.id) {
+            handleSetUser(user);
+            console.log("created in db", user);
+            setValues({
+              name: "",
+              email: "",
+              confirmPassword: "",
+              password: "",
+              showPassword: false,
+            });
+            navigate("/dashboard");
+          } else {
+            console.log("signup server error", user);
+            setValues(() => {
+              return {
+                name: "",
+                email: "",
+                confirmPassword: "",
+                password: "",
+                showPassword: false,
+              };
+            });
+          }
         } catch (error) {
           console.log("signup error", error);
         }
