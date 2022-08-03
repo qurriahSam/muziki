@@ -15,7 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AddSongDialog from "./AddSongDialog";
 
-const ResponsiveAppBar = ({ user, handleSetUser }) => {
+const ResponsiveAppBar = ({ user, handleSetUser, setSongUpload, songUpload }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [addSongDialog, setaddSongDialog] = useState(false);
@@ -203,7 +203,13 @@ const ResponsiveAppBar = ({ user, handleSetUser }) => {
           </Toolbar>
         </Container>
       </AppBar>
-      <AddSongDialog handleAddSongClick={handleAddSongClick} open={addSongDialog} user={user} />
+      <AddSongDialog
+        handleAddSongClick={handleAddSongClick}
+        open={addSongDialog}
+        user={user}
+        songUpload={songUpload}
+        setSongUpload={setSongUpload}
+      />
     </>
   );
 };

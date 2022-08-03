@@ -6,12 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { TextField, LinearProgress } from "@mui/material";
 
-export default function AlertDialog({ handleAddSongClick, open, user }) {
-  const [songUpload, setSongUpload] = useState({
-    name: "",
-    artist: "",
-    audio: null,
-  });
+export default function AlertDialog({ handleAddSongClick, open, user, songUpload, setSongUpload }) {
   const [isUploading, setIsUploading] = useState(false);
 
   const handleChange = (prop) => (event) => {

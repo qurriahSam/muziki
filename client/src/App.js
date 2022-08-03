@@ -22,6 +22,11 @@ const theme = createTheme({
 
 function App() {
   const [user, setUser] = useState(null);
+  const [songUpload, setSongUpload] = useState({
+    name: "",
+    artist: "",
+    audio: null,
+  });
   const navigate = useNavigate();
 
   const handleSetUser = (r) => {
@@ -47,12 +52,17 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Navbar user={user} handleSetUser={handleSetUser} />
+      <Navbar
+        user={user}
+        handleSetUser={handleSetUser}
+        songUpload={songUpload}
+        setSongUpload={setSongUpload}
+      />
       <Routes>
         <Route path="/" element={<LandingPage user={user} handleSetUser={handleSetUser} />} />
         <Route path="signup" element={<SignUp handleSetUser={handleSetUser} />} />
         <Route path="login" element={<Login handleSetUser={handleSetUser} />} />
-        <Route path="dashboard" element={<Dashboard user={user} />} />
+        <Route path="dashboard" element={<Dashboard user={user} songUpload={songUpload} />} />
         <Route path="*" element={<p>There's nothing here: 404!</p>} />
       </Routes>
     </ThemeProvider>
