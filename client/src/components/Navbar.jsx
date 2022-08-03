@@ -13,12 +13,12 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-
-const pages = ["Add Song", "New Playlist"];
+import AddSongDialog from "./AddSongDialog";
 
 const ResponsiveAppBar = ({ user, handleSetUser }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [addSongDialog, setaddSongDialog] = useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -40,6 +40,10 @@ const ResponsiveAppBar = ({ user, handleSetUser }) => {
     setAnchorElUser(null);
   };
 
+  const handleAddSongClick = () => {
+    setaddSongDialog(!addSongDialog);
+  };
+
   const navigate = useNavigate();
 
   function handleLogoutClick() {
@@ -53,146 +57,154 @@ const ResponsiveAppBar = ({ user, handleSetUser }) => {
   }
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "kalam",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Muz!ki
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+    <>
+      <AppBar position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/"
               sx={{
-                display: { xs: "block", md: "none" },
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "kalam",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "kalam",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Muz!ki
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "inherit", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+              Muz!ki
+            </Typography>
 
-          <Box sx={{ flexGrow: 0, display: { xs: "block", md: "none" } }}>
-            <Tooltip title="Login/Logout">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircleIcon />
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
               </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <Link to="login">
-                <MenuItem key="Login" onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Login</Typography>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                <MenuItem key="Add Song" onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Add Song</Typography>
                 </MenuItem>
+                <MenuItem key="New Playlist" onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">New Playlist</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href=""
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontFamily: "kalam",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              Muz!ki
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <Button
+                key="Add Song"
+                onClick={handleAddSongClick}
+                sx={{ my: 2, color: "inherit", display: user ? "block" : "none" }}
+              >
+                Add Song
+              </Button>
+              <Button
+                key="New Playlist"
+                sx={{ my: 2, color: "inherit", display: user ? "block" : "none" }}
+              >
+                New Playlist
+              </Button>
+            </Box>
+
+            <Box sx={{ flexGrow: 0, display: { xs: "block", md: "none" } }}>
+              <Tooltip title="Login/Logout">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <AccountCircleIcon />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <Link to="login">
+                  <MenuItem key="Login" onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Login</Typography>
+                  </MenuItem>
+                </Link>
+                <Link to="signup">
+                  <MenuItem key="SignUp" onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">SignUp</Typography>
+                  </MenuItem>
+                </Link>
+                <MenuItem key="Logout" onClick={handleLogoutUserMenu}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+            <Box sx={{ flexGrow: 0, display: { xs: "none", md: "block" } }}>
+              <Button variant="text" color="inherit" onClick={handleLogoutClick}>
+                Logout
+              </Button>
+              <Link to="login">
+                <Button variant="text" color="inherit">
+                  Login
+                </Button>
               </Link>
               <Link to="signup">
-                <MenuItem key="SignUp" onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">SignUp</Typography>
-                </MenuItem>
+                <Button variant="contained">Signup</Button>
               </Link>
-              <MenuItem key="Logout" onClick={handleLogoutUserMenu}>
-                <Typography textAlign="center">Logout</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "block" } }}>
-            <Button variant="text" color="inherit" onClick={handleLogoutClick}>
-              Logout
-            </Button>
-            <Link to="login">
-              <Button variant="text" color="inherit">
-                Login
-              </Button>
-            </Link>
-            <Link to="signup">
-              <Button variant="contained">Signup</Button>
-            </Link>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <AddSongDialog handleAddSongClick={handleAddSongClick} open={addSongDialog} user={user} />
+    </>
   );
 };
 export default ResponsiveAppBar;
