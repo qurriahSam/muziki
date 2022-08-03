@@ -5,6 +5,7 @@ class SongsController < ApplicationController
   end
 
   def create
+    byebug
     song = Song.create!(song_params)
     render json: song, status: :created
   end
@@ -12,6 +13,6 @@ class SongsController < ApplicationController
   private
 
   def song_params
-    params.permit(:name, :artist, :user_id)
+    params.permit(:name, :artist, :user_id, :audio)
   end
 end
