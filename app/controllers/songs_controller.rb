@@ -5,7 +5,6 @@ class SongsController < ApplicationController
   end
 
   def create
-    byebug
     song = Song.create!(song_params)
     render json: song, status: :created
   end
