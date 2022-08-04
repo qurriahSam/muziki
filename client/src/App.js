@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { yellow } from "@mui/material/colors";
+import { yellow, lime } from "@mui/material/colors";
 import Navbar from "./components/Navbar";
 import { useNavigate } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
@@ -15,7 +15,7 @@ const theme = createTheme({
       main: yellow[300],
     },
     secondary: {
-      main: "#494c7d",
+      main: lime[500],
     },
   },
 });
@@ -24,6 +24,11 @@ function App() {
   const [user, setUser] = useState(null);
   const [songs, setSongs] = useState([]);
   const navigate = useNavigate();
+
+  const handleSetSong = (newSong) => {
+    setSongs(() => [...songs, newSong]);
+    console.log(songs);
+  };
 
   const handleSetUser = (r) => {
     setUser(r);
@@ -48,7 +53,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Navbar user={user} handleSetUser={handleSetUser} />
+      <Navbar user={user} handleSetUser={handleSetUser} handleSetSong={handleSetSong} />
       <Routes>
         <Route path="/" element={<LandingPage user={user} handleSetUser={handleSetUser} />} />
         <Route path="signup" element={<SignUp handleSetUser={handleSetUser} />} />
