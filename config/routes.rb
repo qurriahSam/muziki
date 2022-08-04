@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :songs, only: %i[index create]
+  resources :playlists, only: %i[index update destroy]
 end
