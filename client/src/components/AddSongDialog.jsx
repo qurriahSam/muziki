@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { TextField, LinearProgress } from "@mui/material";
 
-export default function AlertDialog({ handleAddSongClick, open, user }) {
+export default function AlertDialog({ handleAddSongClick, open, user, handleSetSong }) {
   const [songUpload, setSongUpload] = useState({
     name: "",
     artist: "",
@@ -43,6 +43,7 @@ export default function AlertDialog({ handleAddSongClick, open, user }) {
         const song = await response.json();
         if (song.id) {
           setIsUploading(false);
+          handleSetSong(song);
           console.log("song created in db", song);
           setSongUpload({
             name: "",
