@@ -37,6 +37,7 @@ function Song({
 
   const handleEditSongOpen = () => {
     setEditDialogOpen(true);
+    handleClose();
   };
 
   const handleEditSongClose = () => {

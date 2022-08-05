@@ -31,6 +31,10 @@ const ResponsiveAppBar = ({ user, handleSetUser, handleSetSong }) => {
     setAnchorElNav(null);
   };
 
+  const handleCloseNavMenuAddSong = () => {
+    setAnchorElNav(null);
+  };
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -108,10 +112,10 @@ const ResponsiveAppBar = ({ user, handleSetUser, handleSetSong }) => {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                <MenuItem key="Add Song" onClick={handleCloseNavMenu}>
+                <MenuItem key="Add Song" onClick={handleCloseNavMenuAddSong}>
                   <Typography textAlign="center">Add Song</Typography>
                 </MenuItem>
-                <MenuItem key="New Playlist" onClick={handleCloseNavMenu}>
+                <MenuItem key="New Playlist" onClick={handleCloseNavMenu} sx={{ display: "none" }}>
                   <Typography textAlign="center">New Playlist</Typography>
                 </MenuItem>
               </Menu>
@@ -182,7 +186,11 @@ const ResponsiveAppBar = ({ user, handleSetUser, handleSetSong }) => {
                   </MenuItem>
                 </Link>
                 <Link to="signup">
-                  <MenuItem key="SignUp" onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key="SignUp"
+                    onClick={handleCloseUserMenu}
+                    sx={{ display: user ? "none" : "block" }}
+                  >
                     <Typography textAlign="center">SignUp</Typography>
                   </MenuItem>
                 </Link>

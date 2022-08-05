@@ -35,6 +35,7 @@ export default function EditSong({ handleEditSongClose, open, id, name, artist, 
         if (song.id) {
           setIsUploading(false);
           handleEditSong(song);
+          handleEditSongClose();
           console.log("song updated in db", song);
           setSongUpload({
             name: name,
