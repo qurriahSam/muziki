@@ -14,6 +14,7 @@ const dashboard = {
 
 function Dashboard({ user, songs, setSongs }) {
   const [nowPlaying, setNowPlaying] = useState();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,10 +23,11 @@ function Dashboard({ user, songs, setSongs }) {
     } else {
       const songsFetch = async () => {
         try {
-          const response = await fetch("/songs");
+          const response = await fetch(`/songs/${user.id}`);
           const songs = await response.json();
           setSongs(songs);
-          setNowPlaying(songs[0].audio.url);
+          console.log(songs);
+          //setNowPlaying(songs[0].audio.url);
         } catch (error) {
           console.log("fetch songs error", error);
         }
@@ -34,9 +36,34 @@ function Dashboard({ user, songs, setSongs }) {
     }
   }, [user]);
 
-  const displaySongs = songs.map((song) => (
-    <Song key={song.id} song={song} setNowPlaying={setNowPlaying} nowPlaying={nowPlaying} />
-  ));
+  const handleDeleteSong = (id) => {
+    const updatedSongs = songs.filter((song) => {
+      return song.id !== id;
+    });
+    console.log(updatedSongs);
+    setSongs(updatedSongs);
+  };
+
+  const handleEditSong = (editedSong) => {
+    const updatedSongs = songs.filter((song) => {
+      return song.id !== editedSong.id;
+    });
+    setSongs([...updatedSongs, editedSong]);
+  };
+
+  const displaySongs =
+    songs.length === 0
+      ? "no songs"
+      : songs.map((song) => (
+          <Song
+            key={song.id}
+            song={song}
+            setNowPlaying={setNowPlaying}
+            nowPlaying={nowPlaying}
+            handleDeleteSong={handleDeleteSong}
+            handleEditSong={handleEditSong}
+          />
+        ));
 
   const icons = {
     play: <PlayCircleIcon color="secondary" fontSize="large" />,
@@ -54,10 +81,10 @@ function Dashboard({ user, songs, setSongs }) {
           }}
           disableGutters
         >
-          <Box sx={{ width: "50%", height: "6vh", pt: "2vh", backgroundColor: "#fff176" }}>
+          <Box sx={{ width: "100%", height: "6vh", pt: "2vh", backgroundColor: "#fff176" }}>
             Songs
           </Box>
-          <Box sx={{ width: "50%", height: "6vh", pt: "2vh" }}>Playlist</Box>
+          {/* <Box sx={{ width: "50%", height: "6vh", pt: "2vh" }}>Playlist</Box> */}
         </Container>
         <Container maxWidth="md" sx={{ py: "2vh", height: "58vh", overflowY: "scroll" }}>
           {displaySongs}
@@ -67,8 +94,7 @@ function Dashboard({ user, songs, setSongs }) {
       <Container sx={{ pt: "10px" }}>
         <AudioPlayer
           autoPlay
-          showSkipControls
-          showJumpControls={false}
+          showJumpControls
           src={nowPlaying}
           customIcons={icons}
           style={{ height: "10vh", boxShadow: "none" }}

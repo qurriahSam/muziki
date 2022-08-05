@@ -26,7 +26,12 @@ function App() {
   const navigate = useNavigate();
 
   const handleSetSong = (newSong) => {
-    setSongs(() => [...songs, newSong]);
+    if (songs == null) {
+      setSongs(() => songs.push(newSong));
+    } else {
+      setSongs(() => [...songs, newSong]);
+    }
+
     console.log(songs);
   };
 

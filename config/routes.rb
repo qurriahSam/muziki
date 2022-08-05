@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :songs, only: %i[index create]
-  resources :playlists, only: %i[index update destroy]
+  resources :songs, except: :index
+  resources :playlists, only: %i[index destroy]
+  resources :playlist_songs, only: %i[create destroy]
 end

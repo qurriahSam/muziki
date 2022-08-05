@@ -144,7 +144,7 @@ const ResponsiveAppBar = ({ user, handleSetUser, handleSetSong }) => {
               </Button>
               <Button
                 key="New Playlist"
-                sx={{ my: 2, color: "inherit", display: user ? "block" : "none" }}
+                sx={{ my: 2, color: "inherit", display: user ? "none" : "none" }}
               >
                 New Playlist
               </Button>
@@ -173,7 +173,11 @@ const ResponsiveAppBar = ({ user, handleSetUser, handleSetSong }) => {
                 onClose={handleCloseUserMenu}
               >
                 <Link to="login">
-                  <MenuItem key="Login" onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key="Login"
+                    onClick={handleCloseUserMenu}
+                    sx={{ display: user ? "none" : "block" }}
+                  >
                     <Typography textAlign="center">Login</Typography>
                   </MenuItem>
                 </Link>
@@ -182,22 +186,33 @@ const ResponsiveAppBar = ({ user, handleSetUser, handleSetSong }) => {
                     <Typography textAlign="center">SignUp</Typography>
                   </MenuItem>
                 </Link>
-                <MenuItem key="Logout" onClick={handleLogoutUserMenu}>
+                <MenuItem
+                  key="Logout"
+                  onClick={handleLogoutUserMenu}
+                  sx={{ display: user ? "block" : "none" }}
+                >
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
               </Menu>
             </Box>
-            <Box sx={{ flexGrow: 0, display: { xs: "none", md: "block" } }}>
-              <Button variant="text" color="inherit" onClick={handleLogoutClick}>
+            <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+              <Button
+                variant="text"
+                color="inherit"
+                onClick={handleLogoutClick}
+                sx={{ display: user ? "block" : "none" }}
+              >
                 Logout
               </Button>
-              <Link to="login">
-                <Button variant="text" color="inherit">
+              <Link to="login" style={{ textDecoration: "none" }}>
+                <Button variant="text" color="inherit" sx={{ display: user ? "none" : "block" }}>
                   Login
                 </Button>
               </Link>
-              <Link to="signup">
-                <Button variant="contained">Signup</Button>
+              <Link to="signup" style={{ textDecoration: "none" }}>
+                <Button variant="contained" sx={{ display: user ? "none" : "block" }}>
+                  Signup
+                </Button>
               </Link>
             </Box>
           </Toolbar>

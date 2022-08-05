@@ -1,6 +1,7 @@
 import React from "react";
 import headphones from "../img/headphonesClipartpng";
 import { Box, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const landing = {
   height: "88vh",
@@ -24,7 +25,9 @@ function LandingPage() {
       <Box sx={{ textAlign: "center" }}>
         <img src={headphones} width={200} alt="headphones" />
         <h2 style={title}>Music for everyone.</h2>
-        <Button variant="contained">Start Listening</Button>
+        <Link to="signup" style={{ textDecoration: "none" }}>
+          <Button variant="contained">Start Listening</Button>
+        </Link>
       </Box>
     </div>
   );
