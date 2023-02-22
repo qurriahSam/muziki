@@ -7,6 +7,7 @@ services:
   - type: web
     name: mysite
     env: ruby
+    plan: free
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec rails s"
     envVars:
@@ -16,7 +17,3 @@ services:
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false
-  - type: redis
-    name: redis
-    plan: free
-    maxmemoryPolicy: noeviction
