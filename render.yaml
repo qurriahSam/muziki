@@ -18,6 +18,5 @@ services:
         sync: false
   - type: redis
     name: redis
-    ipallowlist: []
     plan: free
     maxmemoryPolicy: noeviction
