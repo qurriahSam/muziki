@@ -11,8 +11,7 @@
 
 ## Description
 
-Muziki is a web application that allows users to upload their music on the platform and stream it
-from different devices by logging in to their accounts
+Muziki is a web-based application that allows users to easily upload and stream a wide selection of music tracks. The platform hosts an extensive and diverse music library curated from various sources, providing users with an unmatched selection of songs from various genres and artists. With the ability to log in to their accounts from different devices, users can enjoy their favorite tunes on-the-go, all while effortlessly managing their personal music libraries through Muziki's user-friendly interface.
 
 ## Screenshot
 
